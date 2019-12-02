@@ -1,12 +1,7 @@
 #!/bin/bash -x
-# What is new: 2018-11-30 11:01:46 
-#  - option to download SRA sequences
-#  - multisample variant calling, remove depth restriction
-#  - include vcftools
-#  - new exercises
-# NGS bwa + samtools + GATK pipeline
+# NGS bwa + samtools + picard pipeline
 # M Perez-Enciso
-# miguel.perez@uab.es
+# mperezenciso@gmail.com
 
 ##############################################################################################
 #                              DIRECTORIES                                                   #
