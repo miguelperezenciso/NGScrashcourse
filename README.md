@@ -97,7 +97,7 @@ I suggest to have separate folders to organize the different analysis steps, but
 	# move back to wkng folder
 	cd $DWD
 	
-### Step 2 BWA ALIGNMENT AND refinment
+### Step 2 BWA alignment and refinment
 This is the most expensive part, both in CPU and memory usage
 
 	# make a directory for that sample
@@ -176,27 +176,27 @@ This is a most useful resource for NGS data. here I show how to automtaically do
 **WARNING: this can take a lot of time and resources !!!!**
 
 	# You need faster-qdump and aspera
-    	# To install aspera
-   	#    - https://www.ncbi.nlm.nih.gov/books/NBK242625/
-    	#    - http://downloads.asperasoft.com/connect2/
+	# To install aspera
+	#    - https://www.ncbi.nlm.nih.gov/books/NBK242625/
+	#    - http://downloads.asperasoft.com/connect2/
 
 	# Aspera is a fast connection downloader    
-    	ASPERA=~/.aspera
+	ASPERA=~/.aspera
 
-    	cd $DIRDATA
-    	# Choose a read to download, should start with SRR, SRX, ERR
-    	SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
-    	# Exercise: inspect info about SRR6650027
-    	# this is the directory holding the compressed sequences
-    	DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
-    	# this downloads the sequences in $DIRDATA/SRR directory
-    	$ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
+	cd $DIRDATA
+	# Choose a read to download, should start with SRR, SRX, ERR
+	SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
+	# Exercise: inspect info about SRR6650027
+	# this is the directory holding the compressed sequences
+	DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
+	# this downloads the sequences in $DIRDATA/SRR directory
+	$ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
                                  -k1 -Tr -l100m anonftp@ftp-private.ncbi.nlm.nih.gov:$DIRSRR $DIRDATA
-    	cd $SRR
-    	# uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
+	cd $SRR
+	# uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
 	# this is actually the slowest step
-    	fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
-    	rm $SRA.sra
+	fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
+	rm $SRA.sra
 	
 	cd $DWD
 
@@ -215,3 +215,5 @@ This is a most useful resource for NGS data. here I show how to automtaically do
  - Browse the SRA archive (https://www.ncbi.nlm.nih.gov/sra/docs), which holds NGS data of numerous types and species. Project ERP004545 corresponds to M genitalium.
  
   - Nature Review Genetics series on [Applications of next-generation sequencing](https://www.nature.com/collections/jmgqdxpvsk)
+  
+  - ...
