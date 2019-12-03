@@ -17,8 +17,8 @@ You need to install:
 
 - [BWA](https://sourceforge.net/projects/bio-bwa/files/). This is one of the most widely used aligner for genomic data.
 
-	`git clone https://github.com/lh3/bwa.git
-	cd bwa; make`` 
+	`git clone https://github.com/lh3/bwa.git`
+	`cd bwa; make` 
 
 - samtools, bcftools and hstslib: http://www.htslib.org/download/. Once extracting, for each of them type 'make'  
         make
