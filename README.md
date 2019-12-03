@@ -33,7 +33,33 @@ You need to install:
 ### Folder scheme
 I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **assembly** with the assembly and all required indices, a folder **reads** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables.
 
+	# current folder
+	DWD=$(pwd)
+	# this should contain the assembly
+	DIRASSEMBLY=$DWD/assembly
+	## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
+	ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic.fna
+	# this should contain the reads
+	DIRDATA=$DWD/reads
+	# this contains the binaries, alternatively, they can be accessed via default path
+	DIRBIN=$DWD/bin
+	# this will contain the alignment files
+	DIRBAM=$DWD/bamfiles
+	mkdir $DIRBAM
+	# this will contain the vcf files
+	DIRVCF=$DWD/varfiles
+	mkdir $DIRVCF
+
+
 ### Definitions
+
+	# define variables with program names or install in your path
+	fastqc=$DIRBIN/FastQC/fastqc
+	bwa=$DIRBIN/bwa
+	samtools=$DIRBIN/samtools
+	bcftools=$DIRBIN/bcftools
+	picard=$DIRBIN/picard.jar
+	vcftools=$DIRBIN/vcftools
 
 	# sample to be analyzed
 	OUT=Individual1
@@ -50,8 +76,25 @@ I suggest to have separate folders to organize the different analysis steps, but
 	BASEQ=20        # min base quality
 	NP=2            # no. of threads
 
+### Step 0: Index reference genome
 
-### Step 0: Check reads quality 
+	cd $DIRASSEMBLY
+	$bwa index -a bwtsw $DIRASSEMBLY/$ASSEMBLY
+	
+	# creating index with samtools
+	samtools faidx $ASSEMBLY
+
+	# dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
+	java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
+	cd $DWD
+
+### Step 1: Check reads quality
+
+	cd $DIRDATA
+	zcat $DIRDATA/$READS_PE1 | $fastqc stdin
+	zcat $DIRDATA/$READS_PE1 | $fastqc stdin
+	# move back to wkng folder
+	cd $DWD
 
 ### Exploring...
  - Get acquainted with major sequenicng technologies: Illumina (https://en.wikipedia.org/wiki/Illumina_dye_sequencing), Oxford Nanopore (https://en.wikipedia.org/wiki/Nanopore_sequencing), PacBio(https://en.wikipedia.org/wiki/Single-molecule_real-time_sequencing)...
