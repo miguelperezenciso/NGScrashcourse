@@ -1,7 +1,7 @@
 # NGScrashcourse
 A few hour introductory course to NGS analysis
 
-This is a few hour lecture approx that I teach at Universitat Autonoma of Barcelona MSc in Bioinformatics. It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism (Mycoplasma genitalium) and a few simulated reads using ART.
+This is a few hour lecture approx that I teach at Universitat Autonoma of Barcelona MSc in Bioinformatics. It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism (Mycoplasma genitalium) and a few simulated reads using [ART](https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm).
 
 ### Exploring...
 1- Browse GTAK best practices (https://software.broadinstitute.org/gatk/best-practices/):In particular, you can take a look at  https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165; and https://software.broadinstitute.org/gatk/best-practices/workflow?id=11145
