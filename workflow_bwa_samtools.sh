@@ -7,19 +7,22 @@
 #                              DIRECTORIES                                                   #
 # this arrangement is simply a proposal, you can arrange as fits you best                    #
 ##############################################################################################
+# current folder
 DWD=$(pwd)
-# this contains the assembly
+# this should contain the assembly
 DIRASSEMBLY=$DWD/assembly
 ## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
 ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic.fna
-# this contains the reads
+# this should contain the reads
 DIRDATA=$DWD/reads
-# this contains the binaries
+# this contains the binaries, alternatively, they can be accessed via default path
 DIRBIN=$DWD/bin
 # this will contain the alignment files
 DIRBAM=$DWD/bamfiles
-# this will ocntain the vcf files
+mkdir $DIRBAM
+# this will contain the vcf files
 DIRVCF=$DWD/varfiles
+mkdir $DIRVCF
 
 # Exercise: browse the corresponding websites and get an idea of what they are for and general options
 #     https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
@@ -35,7 +38,7 @@ DIRVCF=$DWD/varfiles
 
 ##############################################################################################
 #                              EXECUTABLES                                                   #
-#  download and install in bin directory
+#                   download and install in bin directory                                    #
 ##############################################################################################
 # FastQC download from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 # bwa: https://sourceforge.net/projects/bio-bwa/files/
