@@ -4,8 +4,8 @@ A few hour introductory course to NGS analysis
 This is a few hour lecture that I teach at Universitat Autonoma of Barcelona [MSc in Bioinformatics](https://mscbioinformatics.uab.cat/). It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism ([Mycoplasma genitalium](https://www.ncbi.nlm.nih.gov/genome/?term=Mycoplasma%20genitalium)) and a few simulated reads using [ART](https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm). 
 
 ### WARNINGGGGG
-- **NGS data are massive yet noisy. 
-- **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.
+- **NGS data are massive yet noisy.** 
+- **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
 
 ### Tools needed
 Hundreds of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
@@ -14,10 +14,11 @@ Note: This is a samtools based pipeline, alternative pipelines are based on GATK
 
 You need to install:
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): This is a java tool that provides graphics of sequence quality. NGS consists of data in compressed [fastq](https://en.wikipedia.org/wiki/FASTQ_format) format.
-# FastQC download from 
-# bwa: https://sourceforge.net/projects/bio-bwa/files/
-	git clone https://github.com/lh3/bwa.git
-	cd bwa; make
+
+- [BWA](https://sourceforge.net/projects/bio-bwa/files/). This is one of the most widely used aligner for genomic data.
+	` git clone https://github.com/lh3/bwa.git
+	cd bwa; make``
+	
 # samtools, bcftools and hstslib: http://www.htslib.org/download/
 # once extracting, for each of them 
         make
