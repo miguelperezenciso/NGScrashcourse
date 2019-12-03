@@ -22,17 +22,36 @@ You need to install:
 
 - samtools, bcftools and hstslib: http://www.htslib.org/download/. A series of tools for manipulating bam files and variant calling. Once extracting, for each of them type 'make' and move executables to bin or to add to path. 
        
-# and move executable to $DIRBIN
-
 - [picard](http://broadinstitute.github.io/picard/). this is a series of tools to manipulate bam files and reads. Download and move **picard.jar** file to bin folder or add to path.
 
 - [vcftools](https://sourceforge.net/projects/vcftools/). Filters and extract info from vcf files, format conversion with plink. Download, do 'make' and move executable to bin or to add to path.
 
-- [igv](http://software.broadinstitute.org/software/igv/)
+- [igv](http://software.broadinstitute.org/software/igv/). this is a visualizer of bam files.
 
+- [bedtools](https://bedtools.readthedocs.io/en/latest/). Check also bedtools, you will need it at some point during your career.
 
 ### Folder scheme
 I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **assembly** with the assembly and all required indices, a folder **reads** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables.
+
+### Definitions
+
+	# sample to be analyzed
+	OUT=Individual1
+
+	# reads from sample, they are in $DIRDATA
+	READS_PE1=${OUT}.out.fas.1.fq.gz
+	READS_PE2=${OUT}.out.fas.2.fq.gz
+
+	# global variables
+	MINCOV=5        # min coverage
+	MAXCOV=30       # maximum coverage computed later as 2xmean_depth+1
+	SNPQ=10         # min snp quality
+	MAPQ=20         # min map quality
+	BASEQ=20        # min base quality
+	NP=2            # no. of threads
+
+
+### Step 0: Check reads quality 
 
 ### Exploring...
  - Get acquainted with major sequenicng technologies: Illumina (https://en.wikipedia.org/wiki/Illumina_dye_sequencing), Oxford Nanopore (https://en.wikipedia.org/wiki/Nanopore_sequencing), PacBio(https://en.wikipedia.org/wiki/Single-molecule_real-time_sequencing)...
