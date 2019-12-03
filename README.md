@@ -171,30 +171,41 @@ This is the trickiest step, the one with most options and highly dependent on de
 	# You need to load the Micoplasma genome in $DIRASSEMBLY
 	java -Xmx1000m -jar $igv
 
-### Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra) 
-WARNING: this can take a lot of time and resources !!!!
+### Bonus: Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra)
+This is a most useful resource for NGS data. here I show how to automtaically download NGS reads from given samples. You need the SRR id.
+**WARNING: this can take a lot of time and resources !!!!**
 
 	# You need faster-qdump and aspera
     	# To install aspera
    	#    - https://www.ncbi.nlm.nih.gov/books/NBK242625/
     	#    - http://downloads.asperasoft.com/connect2/
 
-    
-    ASPERA=~/.aspera
+	# Aspera is a fast connection downloader    
+    	ASPERA=~/.aspera
 
-    cd $DIRDATA
-    # Choose a read to download, should start with SRR, SRX, ERRR
-    SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
-    # inspect info about SRR6650027
-    # this is the directory holding the compressed sequences
-    DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
-    # this downloads the sequences in $DIRDATA/SRR directory
-    $ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
+    	cd $DIRDATA
+    	# Choose a read to download, should start with SRR, SRX, ERR
+    	SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
+    	# Exercise: inspect info about SRR6650027
+    	# this is the directory holding the compressed sequences
+    	DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
+    	# this downloads the sequences in $DIRDATA/SRR directory
+    	$ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
                                  -k1 -Tr -l100m anonftp@ftp-private.ncbi.nlm.nih.gov:$DIRSRR $DIRDATA
-    cd $SRR
-    # uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
-    fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
-    rm $SRA.sra
+    	cd $SRR
+    	# uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
+	# this is actually the slowest step
+    	fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
+    	rm $SRA.sra
+	
+	cd $DWD
+
+
+### Exercises
+ * Choose a different strain from experiment ERP004545, you need to install aspera
+ * Run fastqc, Perform alignment as described
+ * Perform multiple snp calling with about 5-10 samples together
+ * Using vcftools, do a plot of allele frequency and missingness across all SNPs
 
 ### Exploring...
  - Get acquainted with major sequenicng technologies: Illumina (https://en.wikipedia.org/wiki/Illumina_dye_sequencing), Oxford Nanopore (https://en.wikipedia.org/wiki/Nanopore_sequencing), PacBio(https://en.wikipedia.org/wiki/Single-molecule_real-time_sequencing)...
@@ -202,12 +213,5 @@ WARNING: this can take a lot of time and resources !!!!
  - Browse [GTAK](https://software.broadinstitute.org/gatk) best practices (https://software.broadinstitute.org/gatk/best-practices/):In particular, you can take a look at  https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165; and https://software.broadinstitute.org/gatk/best-practices/workflow?id=11145
     
  - Browse the SRA archive (https://www.ncbi.nlm.nih.gov/sra/docs), which holds NGS data of numerous types and species. Project ERP004545 corresponds to M genitalium.
-
-## Exercises
- * Choose a different strain from experiment ERP004545, you need to install aspera
-
- * Run fastqc, Perform alignment as described
-
- * Perform multiple snp calling with about 5-10 samples together
-
-4 Using vcftools, do a plot of allele frequency and missingness across all SNPs
+ 
+  - Nature Review Genetics series on [Applications of next-generation sequencing](https://www.nature.com/collections/jmgqdxpvsk)
