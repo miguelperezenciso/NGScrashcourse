@@ -86,6 +86,7 @@ I suggest to have separate folders to organize the different analysis steps, but
 
 	# dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
 	java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
+	# back
 	cd $DWD
 
 ### Step 1: Check reads quality
@@ -95,6 +96,105 @@ I suggest to have separate folders to organize the different analysis steps, but
 	zcat $DIRDATA/$READS_PE1 | $fastqc stdin
 	# move back to wkng folder
 	cd $DWD
+	
+### Step 2 BWA ALIGNMENT AND refinment
+This is the most expensive part, both in CPU and memory usage
+
+	# make a directory for that sample
+	mkdir $DIRBAM/$OUT
+	cd $DIRBAM/$OUT
+
+	# This adds a tag to the alignment
+	TAG="@RG\tID:$OUT\tSM:$OUT"
+	time $bwa mem -t $NP -R $TAG $DIRASSEMBLY/$ASSEMBLY $DIRDATA/$READS_PE1 $DIRDATA/$READS_PE2 $samtools view -b - > $OUT.bam
+
+	# sort
+	time $samtools sort -O bam -T tmp $OUT.bam > $OUT.sort.bam
+	time $samtools index $OUT.sort.bam
+
+	# rm duplicates with picard, this removes potential PCR duplicates
+	time java -jar $picard MarkDuplicates \
+                         REMOVE_DUPLICATES=true \
+                         INPUT=$OUT.sort.bam \
+                         OUTPUT=$OUT.rmdup.bam \
+                         METRICS_FILE=metrics.out
+
+	# recalibrate base quality with GATK if you have a list of known SNPs.
+	# check https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165
+
+	# depth file
+	time $samtools depth -q $BASEQ -Q $MAPQ $OUT.rmdup.bam | awk '{print $3}'  | \
+                 sort | uniq -c | sort -n -k2 > $OUT.rmdup.depth
+	# Exercise: find out what this instruction does
+
+	# new indexed file
+	$samtools index $OUT.rmdup.bam
+
+	# computes mean and max depth to be used, min depth is defined in $MINCOV
+	Q=`awk '$2>0 {a+=$1*$2;n+=$1} END {print a/n}' "$DIRBAM/$OUT/$OUT.rmdup.depth" `
+	# recommended maximum depth is twice average depth
+	MAXCOV=`echo "tmp=2*($Q+0.5); tmp /= 1; tmp" | bc`
+	echo 'sample meanDepth maxDepth ' $OUT $Q $MAXCOV
+
+	#--> EXERCISE
+	#    How many reads in each bam file:  samtools flagstat
+	#    How many reads with map quality > 20:  samtools view -q 20 $OUT.bam | wc -l
+
+	cd $DWD
+
+### Step 3. samtools SNP CALLING with gVCF blocks 
+This is the trickiest step, the one with most options and highly dependent on depth and sequence quality. Filtering SNPs is a must. Distrust indels more than SNPs. Beware of options with snp calling using several samples together. 
+
+	cd $DIRVCF
+
+	# check meaning of options typing "$bcftools"
+	$bcftools mpileup -Ov -g $MINCOV -q $MAPQ -Q $BASEQ -d $MAXCOV -f $DIRASSEMBLY/$ASSEMBLY \
+      		$DIRBAM/$OUT/$OUT.rmdup.bam | \
+      		$bcftools call -g$MINCOV -mOz -o $OUT.gvcf.gz
+
+	# filtering (see https://github.com/samtools/bcftools/wiki/HOWTOs#variant-filtering)
+	$bcftools filter -O v -g3 -s LOWQUAL -e"%QUAL<$SNPQ || %MAX(INFO/DP)<$MINCOV || %MAX(INFO/DP)>$MAXCOV" \
+      		$OUT.gvcf.gz | $bcftools view -f PASS -O z > $OUT.flt.gvcf.gz
+
+	#--> EXERCISES
+	#    Check the meaning of each option (eg, type $bcftools)
+	#    Inspect the vcf file, what is each field?
+	#    Do you find any indel?
+	#    How many variants were filtered out (compare $OUT.flt.gvcf and $OUT.gvcf)? why?
+	#    Count how many heterozygous snps, homozygous snps, why you find only one class?
+
+	cd $DWD
+
+### Step 4. Visualize some SNPs with IGV (http://software.broadinstitute.org/software/igv/) 
+
+	# Start IGV (you need java8)
+	# You need to load the Micoplasma genome in $DIRASSEMBLY
+	java -Xmx1000m -jar $igv
+
+### Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra) 
+WARNING: this can take a lot of time and resources !!!!
+
+	# You need faster-qdump and aspera
+    	# To install aspera
+   	#    - https://www.ncbi.nlm.nih.gov/books/NBK242625/
+    	#    - http://downloads.asperasoft.com/connect2/
+
+    
+    ASPERA=~/.aspera
+
+    cd $DIRDATA
+    # Choose a read to download, should start with SRR, SRX, ERRR
+    SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
+    # inspect info about SRR6650027
+    # this is the directory holding the compressed sequences
+    DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
+    # this downloads the sequences in $DIRDATA/SRR directory
+    $ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
+                                 -k1 -Tr -l100m anonftp@ftp-private.ncbi.nlm.nih.gov:$DIRSRR $DIRDATA
+    cd $SRR
+    # uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
+    fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
+    rm $SRA.sra
 
 ### Exploring...
  - Get acquainted with major sequenicng technologies: Illumina (https://en.wikipedia.org/wiki/Illumina_dye_sequencing), Oxford Nanopore (https://en.wikipedia.org/wiki/Nanopore_sequencing), PacBio(https://en.wikipedia.org/wiki/Single-molecule_real-time_sequencing)...
