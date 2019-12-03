@@ -16,21 +16,20 @@ You need to install:
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): This is a java tool that provides graphics of sequence quality. NGS consists of data in compressed [fastq](https://en.wikipedia.org/wiki/FASTQ_format) format.
 
 - [BWA](https://sourceforge.net/projects/bio-bwa/files/). This is one of the most widely used aligner for genomic data.
-	` git clone https://github.com/lh3/bwa.git
-	cd bwa; make``
-	
-# samtools, bcftools and hstslib: http://www.htslib.org/download/
+
+	git clone https://github.com/lh3/bwa.git
+	cd bwa; make
+
+- samtools, bcftools and hstslib: http://www.htslib.org/download/
 # once extracting, for each of them 
         make
 # and move executable to $DIRBIN
-# picard: http://broadinstitute.github.io/picard/
-# and move picard.jar to $DIRBIN
 
-# vcftools: https://sourceforge.net/projects/vcftools/
-        make
-# and move executable to $DIRBIN
+- [picard](http://broadinstitute.github.io/picard/). this is a series of tools to manipulate bam files and reads. Download and move **picard.jar** file to bin folder.
 
-# igv: http://software.broadinstitute.org/software/igv/
+- [vcftools](https://sourceforge.net/projects/vcftools/). Filters and extract info from vcf files, format conversion with plink. Download, do 'make' and move executable to bin or to path.
+
+- [igv](http://software.broadinstitute.org/software/igv/)
 
 
 ### Folder scheme
