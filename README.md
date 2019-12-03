@@ -20,8 +20,8 @@ You need to install:
 	`git clone https://github.com/lh3/bwa.git`
 	`cd bwa; make` 
 
-- samtools, bcftools and hstslib: http://www.htslib.org/download/. Once extracting, for each of them type 'make'  
-        make
+- samtools, bcftools and hstslib: http://www.htslib.org/download/. A series of tools for manipulating bam files and variant calling. Once extracting, for each of them type 'make' and move executables to bin or to add to path. 
+       
 # and move executable to $DIRBIN
 
 - [picard](http://broadinstitute.github.io/picard/). this is a series of tools to manipulate bam files and reads. Download and move **picard.jar** file to bin folder or add to path.
