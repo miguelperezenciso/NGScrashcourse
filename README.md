@@ -8,7 +8,7 @@ This is a few hour lecture that I teach at Universitat Autonoma of Barcelona [MS
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
 
 ### Tools needed
-Hundreds of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
+Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
 
 Note: This is a samtools based pipeline, alternative pipelines are based on GATK. Hopefully, GATK pipelines will be added soon.
 
