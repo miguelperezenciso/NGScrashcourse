@@ -93,7 +93,7 @@ NP=2            # no. of threads
    $bwa index -a bwtsw $DIRASSEMBLY/$ASSEMBLY
 
    # creating index with samtools
-   samtools faidx $ASSEMBLY
+   $samtools faidx $ASSEMBLY
 
    # dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
    java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
@@ -107,8 +107,8 @@ NP=2            # no. of threads
   # run interactively 
   $fastqc
   # or in batch 
-  zcat $DIRDATA/$READS_PE1 | $fastqc stdin
-  zcat $DIRDATA/$READS_PE1 | $fastqc stdin
+  zcat $DIRDATA/$READS_PE1 | $fastqc stdin1
+  zcat $DIRDATA/$READS_PE2 | $fastqc stdin2
   cd $DWD
 
 ################################################################################
@@ -237,7 +237,7 @@ exit 0
 ####################################################################################
 #   1- Each of you choose a different strain from experiment ERP004545, you need to install aspera
 #   2- Run fastqc, Perform alignment as described, each of you individually
-#   3- get together in groups and perform multiple snp calling with about 5-10 samples together
+#   3- Get together in groups and perform multiple snp calling with about 5-10 samples together
 #      Note: remove the maximum depth option     
 #   4- Using vcftools, do a plot of allele frequency and missingness across all SNPs
 ####################################################################################
