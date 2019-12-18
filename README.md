@@ -82,7 +82,7 @@ I suggest to have separate folders to organize the different analysis steps, but
 	$bwa index -a bwtsw $DIRASSEMBLY/$ASSEMBLY
 	
 	# creating index with samtools
-	samtools faidx $ASSEMBLY
+	$samtools faidx $ASSEMBLY
 
 	# dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
 	java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
@@ -202,10 +202,11 @@ This is a most useful resource for NGS data. here I show how to automtaically do
 
 
 ### Exercises
- * Choose a different strain from experiment ERP004545, you need to install aspera
- * Run fastqc, Perform alignment as described
- * Perform multiple snp calling with about 5-10 samples together
- * Using vcftools, do a plot of allele frequency and missingness across all SNPs
+ * Choose a different strain from experiment ERP004545. Note: you need to install aspera. Optionally, choose some of the already available five samples.
+ * Perform alignment as described.
+ * Perform multiple snp calling with about 5-10 samples together. 
+ * Using vcftools, do a plot of allele frequency and missingness across all SNPs.
+ * Identify common SNPs between samples.
 
 ### Exploring...
  - Get acquainted with major sequenicng technologies: Illumina (https://en.wikipedia.org/wiki/Illumina_dye_sequencing), Oxford Nanopore (https://en.wikipedia.org/wiki/Nanopore_sequencing), PacBio(https://en.wikipedia.org/wiki/Single-molecule_real-time_sequencing)...
