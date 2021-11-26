@@ -7,11 +7,29 @@ There exists dozens of procedures specific to many of the applications of NGS da
 
 **These notes are intended for variant calling with genome data.**
 
+### WARNINGGGGG 1
+
+This is a rapidly evolving field. 
+
 ### Why NGS? 
+
+* Because it is cheap.
+* Because one technology fits all:
+	- De novo sequencing: assemblies of new species.
+	- Re sequencing: variant discovery, both SNPs and structural variants
+	- mRNA resequencing: discovery of new splicing events, quantification of transcription activity
+	- microRNA characterization
+	- Bisulfide sequencing: Epigenomics 
+	- CHip technology: DNA motifs
+	- Metagenomics
+	- Medical applications: cancer genomes …
+	- ...
+![image](https://user-images.githubusercontent.com/14070921/143584577-8f3dd339-c2f1-4e63-9a10-ab8385cf173c.png)
+	
 
 ### Do we really need NGS?
 
-### WARNINGGGGG
+### WARNINGGGGG 2
 - **NGS data are massive yet noisy.** 
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
 
