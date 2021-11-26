@@ -36,9 +36,12 @@ For many applications, high density genotyping is may be enough.
 
 ### WARNINGGGGG 2
 - **NGS data are massive yet VERY NOISY.** 
-- **You will be puzzled about how results can change depending on bioinformatics options utilized**
+- **You will be puzzled about how results can change depending on bioinformatics options utilized.**
+- **Do NOT outsource this step. DO IT YOURSELF or someone you know well.**
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
-- **Missing data are unavoidable**
+- **Missing data are unavoidable.**
+
+### QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP. VISUALIZATION TOOLS CAN REALLY HELP.
 
 ### What techniques are there?
 Classical Sanger sequencing was a 'First' generation technology. Second or next generation sequencing was initially [454 technique](https://en.wikipedia.org/wiki/454_Life_Sciences) quickly supersed by [Illumina's technologies](https://en.wikipedia.org/wiki/Illumina_dye_sequencing). More recently, the third generation sequencing technologies deliver much longer reads in lower quantity and of lower quality. Representatives are [PacBio](https://www.sciencedirect.com/science/article/pii/S1672022915001345) and [Oxford nanopore](https://en.wikipedia.org/wiki/Nanopore_sequencing).
@@ -46,7 +49,9 @@ Classical Sanger sequencing was a 'First' generation technology. Second or next 
 Each of these technologies may require slightly different software / options but bioinformatics pipelines are essentially the same.
 
 ### Which are the main steps?
-Sequence data need to be aligned against a reference genome. Sequence quality check is warranted. The alignment file can next be improved by removing PCR duplicates and recalibrating quality. There exist several options for varaint calling, main ones are [samtools](http://www.htslib.org/download/) and [GATK](https://gatk.broadinstitute.org/hc/en-us) based.
+Sequence data need to be aligned against a reference genome. Sequence quality check is warranted. Next, the alignment file needs to be sorted and can be polished by removing PCR duplicates and quality can be recalibrated with a known set of variants. 
+
+There exist several options for variant calling, main ones are [samtools](http://www.htslib.org/download/) and [GATK](https://gatk.broadinstitute.org/hc/en-us) based.
 
 ![Figure 1](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/steps.png)
 
@@ -63,9 +68,11 @@ vcf / gvcf
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/formats.png)
 
 ### Main tools needed
-Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
+Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
 
-Note: This is a samtools based pipeline, alternative pipelines are based on GATK. Hopefully, GATK pipelines will be added soon.
+Note: This is a samtools and GATK based pipeline. GATK is better documented (perhaps too much!), but is slower and not necessarily resulting in lower false discovery rate and higher power. 
+
+![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/software.png)
 
 You need to install:
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): This is a java tool that provides graphics of sequence quality. NGS consists of data in compressed [fastq](https://en.wikipedia.org/wiki/FASTQ_format) format.
