@@ -46,8 +46,10 @@ Classical Sanger sequencing was a 'First' generation technology. Second or next 
 Each of these technologies may require slightly different software / options but bioinformatics pipelines are essentially the same.
 
 ### Which are the main steps?
+Sequence data need to be aligned against a reference genome. Sequence quality check is warranted. The alignment file can next be improved by removing PCR duplicates and recalibrating quality. There exist several options for varaint calling, main ones are [samtools](http://www.htslib.org/download/) and [GATK](https://gatk.broadinstitute.org/hc/en-us) based.
 
 ![Figure 1](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/steps.png)
+
 
 ### Main data formats
 
@@ -66,8 +68,8 @@ You need to install:
 	`cd bwa; make` 
 
 - samtools, bcftools and hstslib: http://www.htslib.org/download/. A series of tools for manipulating bam files and variant calling. Once extracting, for each of them type 'make' and move executables to bin or to add to path. 
-       
-- [picard](http://broadinstitute.github.io/picard/). this is a series of tools to manipulate bam files and reads. Download and move **picard.jar** file to bin folder or add to path.
+
+- [GATK](https://gatk.broadinstitute.org/hc/en-us).
 
 - [vcftools](https://sourceforge.net/projects/vcftools/). Filters and extract info from vcf files, format conversion with plink. Download, do 'make' and move executable to bin or to add to path.
 
