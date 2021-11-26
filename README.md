@@ -52,7 +52,13 @@ Sequence data need to be aligned against a reference genome. Sequence quality ch
 
 
 ### Main data formats
+Fortunately, a set of standardized formats allow communication between softwares and pipelines. Main ones are
 
+fastq
+
+bam / CRAM
+
+vcf / gvcf
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
