@@ -41,7 +41,8 @@ For many applications, high density genotyping is may be enough.
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
 - **Missing data are unavoidable.**
 
-### QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP. VISUALIZATION TOOLS CAN REALLY HELP.
+### QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP 
+## VISUALIZATION TOOLS CAN REALLY HELP.
 
 ### What techniques are there?
 Classical Sanger sequencing was a 'First' generation technology. Second or next generation sequencing was initially [454 technique](https://en.wikipedia.org/wiki/454_Life_Sciences) quickly supersed by [Illumina's technologies](https://en.wikipedia.org/wiki/Illumina_dye_sequencing). More recently, the third generation sequencing technologies deliver much longer reads in lower quantity and of lower quality. Representatives are [PacBio](https://www.sciencedirect.com/science/article/pii/S1672022915001345) and [Oxford nanopore](https://en.wikipedia.org/wiki/Nanopore_sequencing).
@@ -62,9 +63,28 @@ Fortunately, a set of standardized formats allow communication between softwares
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/formats.png)
 
 
-[fastq](https://en.wikipedia.org/wiki/FASTQ_format): It is fasta with quality format, and it is the format that sequencing technologies deliver their data.
+**[fastq](https://en.wikipedia.org/wiki/FASTQ_format)**: It is a modified fasta with quality information, and it is the format that sequencing technologies. deliver their data.
+
+	@SEQ_ID
+	GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT	
+	+
+	!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>>>>>CCCCCCC65
+`
+- Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).
+- Line 2 is the raw sequence letters.
+- Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
+- Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
+
+Quality values are encoded using the so called 'PHRED' scores.
 
 BAM format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
+
+
+
+
+
+
+
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
