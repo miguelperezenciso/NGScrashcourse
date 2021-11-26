@@ -13,7 +13,7 @@ This is a rapidly evolving field.
 
 ### Why NGS? 
 
-* Because it is cheap.
+* To be honest, often because it is *very cheap*.
 * Because one technology fits all:
 	- De novo sequencing: assemblies of new species.
 	- Re sequencing: variant discovery, both SNPs and structural variants
@@ -41,8 +41,8 @@ For many applications, high density genotyping is may be enough.
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
 - **Missing data are unavoidable.**
 
-### QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP 
-## VISUALIZATION TOOLS CAN REALLY HELP.
+## QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP 
+### VISUALIZATION TOOLS CAN REALLY HELP.
 
 ### What techniques are there?
 Classical Sanger sequencing was a 'First' generation technology. Second or next generation sequencing was initially [454 technique](https://en.wikipedia.org/wiki/454_Life_Sciences) quickly supersed by [Illumina's technologies](https://en.wikipedia.org/wiki/Illumina_dye_sequencing). More recently, the third generation sequencing technologies deliver much longer reads in lower quantity and of lower quality. Representatives are [PacBio](https://www.sciencedirect.com/science/article/pii/S1672022915001345) and [Oxford nanopore](https://en.wikipedia.org/wiki/Nanopore_sequencing).
@@ -75,7 +75,7 @@ Fortunately, a set of standardized formats allow communication between softwares
 - Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
 - Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
 
-Quality values are encoded using the so called 'PHRED' scores.
+Quality values are encoded using the so called 'Phred' scores using [ASCII](https://es.wikipedia.org/wiki/ASCII) codes. The beauty of this is that numbers with several digits can be represented with a single letter. For instance, symbol '!' has ASCII code 33. Illumina 1.8+ uses Phred+33, raw reads typically (0, 41).
 
 **BAM** format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
 
