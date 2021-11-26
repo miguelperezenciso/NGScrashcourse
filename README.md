@@ -24,8 +24,8 @@ This is a rapidly evolving field.
 	- Metagenomics
 	- Medical applications: cancer genomes …
 	- ...
-![image](https://user-images.githubusercontent.com/14070921/143584577-8f3dd339-c2f1-4e63-9a10-ab8385cf173c.png)
-	
+
+Perhaps you can check the [encode project](https://www.encodeproject.org/) to find about the numerous applications of NGS.
 
 ### Do we really need NGS?
 
