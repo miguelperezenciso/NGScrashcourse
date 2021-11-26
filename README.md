@@ -28,7 +28,7 @@ This is a rapidly evolving field.
 Perhaps you can check the [encode project](https://www.encodeproject.org/) to find about the numerous applications of NGS.
 
 ### Do we really need NGS?
-Perhaps we don't but is sooooo cheap that sequencing whatever has become irrestible.
+Perhaps we don't but is sooooo cheap that sequencing whatever has become irresistible!
 
 Note sequence data is highly redundant and that you will never get many samples with complete sequence. NGS data are full of 'holes' (missing posiitons) even at very high coverage.
 
@@ -41,8 +41,17 @@ For many applications, high density genotyping is may be enough.
 - **Missing data are unavoidable**
 
 ### What techniques are there?
+Classical Sanger sequencing was a 'First' generation technology. Second or next generation sequencing was initially [454 technique](https://en.wikipedia.org/wiki/454_Life_Sciences) quickly supersed by [Illumina's technologies](https://en.wikipedia.org/wiki/Illumina_dye_sequencing). More recently, the third generation sequencing technologies deliver much longer reads in lower quantity and of lower quality. Representatives are [PacBio](https://www.sciencedirect.com/science/article/pii/S1672022915001345) and [Oxford nanopore](https://en.wikipedia.org/wiki/Nanopore_sequencing).
 
-### Tools needed
+Each of these technologies may require slightly different software / options but bioinformatics pipelines are essentially the same.
+
+### Which are the main steps?
+
+
+### Main data formats
+
+
+### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
 
 Note: This is a samtools based pipeline, alternative pipelines are based on GATK. Hopefully, GATK pipelines will be added soon.
