@@ -58,7 +58,7 @@ There exist several options for variant calling, main ones are [samtools](http:/
 
 
 ### Main data formats
-Fortunately, a set of standardized formats allow communication between softwares and pipelines. Main ones are **fastq** for sequence data, **BAM / CRAM** for aligned sequences and **vcf / gvcf** for polymorphisms.
+Fortunately, a set of standardized formats allow communication between softwares and pipelines. Main ones are **fastq** for sequence data, **BAM / CRAM** for aligned sequences and **vcf / gvcf** for polymorphisms. Many of these formats and softwares were developed for the [1000 human genome project](https://www.internationalgenome.org/). 
 
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/formats.png)
 
@@ -69,7 +69,7 @@ Fortunately, a set of standardized formats allow communication between softwares
 	GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT	
 	+
 	!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>>>>>CCCCCCC65
-`
+	
 - Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).
 - Line 2 is the raw sequence letters.
 - Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
@@ -77,7 +77,7 @@ Fortunately, a set of standardized formats allow communication between softwares
 
 Quality values are encoded using the so called 'PHRED' scores.
 
-BAM format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
+**BAM** format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
 
 
 
