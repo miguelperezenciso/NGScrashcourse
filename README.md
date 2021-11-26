@@ -47,6 +47,7 @@ Each of these technologies may require slightly different software / options but
 
 ### Which are the main steps?
 
+(https://github.com/miguelperezenciso/NGScrashcourse/blob/master/steps.png)
 
 ### Main data formats
 
