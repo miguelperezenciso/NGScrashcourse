@@ -1,7 +1,7 @@
-# NGScrashcourse
-A few hour introductory course to NGS analysis
+# NGS Crash Course
+A few hour introductory course to NGS analysis, mainly for variant calling.
 
-This is a few hour lecture that I teach at Universitat Autonoma of Barcelona [MSc in Bioinformatics](https://mscbioinformatics.uab.cat/). It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism ([Mycoplasma genitalium](https://www.ncbi.nlm.nih.gov/genome/?term=Mycoplasma%20genitalium)) and a few simulated reads using [ART](https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm). 
+This is a few hour lecture that I usually teach at [Universitat Autonoma of Barcelona](www.uab.es) [MSc in Bioinformatics](https://mscbioinformatics.uab.cat/). It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism ([Mycoplasma genitalium](https://www.ncbi.nlm.nih.gov/genome/?term=Mycoplasma%20genitalium)) and a few simulated reads using [ART](https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm). 
 
 There exists dozens of procedures specific to many of the applications of NGS data.
 
