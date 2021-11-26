@@ -3,6 +3,14 @@ A few hour introductory course to NGS analysis
 
 This is a few hour lecture that I teach at Universitat Autonoma of Barcelona [MSc in Bioinformatics](https://mscbioinformatics.uab.cat/). It contains first basic steps for someone who has not had exposure to NGS analyses, yet is familiar with linux commands. For simplicity, I base teaching in one of the smallest microorganism ([Mycoplasma genitalium](https://www.ncbi.nlm.nih.gov/genome/?term=Mycoplasma%20genitalium)) and a few simulated reads using [ART](https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm). 
 
+There exists dozens of procedures specific to many of the applications of NGS data.
+
+**These notes are intended for variant calling with genome data.**
+
+### Why NGS? 
+
+### Do we really need NGS?
+
 ### WARNINGGGGG
 - **NGS data are massive yet noisy.** 
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
