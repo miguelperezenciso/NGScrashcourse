@@ -57,15 +57,14 @@ There exist several options for variant calling, main ones are [samtools](http:/
 
 
 ### Main data formats
-Fortunately, a set of standardized formats allow communication between softwares and pipelines. Main ones are
-
-fastq
-
-bam / CRAM
-
-vcf / gvcf
+Fortunately, a set of standardized formats allow communication between softwares and pipelines. Main ones are **fastq** for sequence data, **BAM / CRAM** for aligned sequences and **vcf / gvcf** for polymorphisms.
 
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/formats.png)
+
+
+[fastq](https://en.wikipedia.org/wiki/FASTQ_format): It is fasta with quality format, and it is the format that sequencing technologies deliver their data.
+
+BAM format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
