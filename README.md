@@ -28,10 +28,19 @@ This is a rapidly evolving field.
 Perhaps you can check the [encode project](https://www.encodeproject.org/) to find about the numerous applications of NGS.
 
 ### Do we really need NGS?
+Perhaps we don't but is sooooo cheap that sequencing whatever has become irrestible.
+
+Note sequence data is highly redundant and that you will never get many samples with complete sequence. NGS data are full of 'holes' (missing posiitons) even at very high coverage.
+
+For many applications, high density genotyping is may be enough.
 
 ### WARNINGGGGG 2
-- **NGS data are massive yet noisy.** 
+- **NGS data are massive yet VERY NOISY.** 
+- **You will be puzzled about how results can change depending on bioinformatics options utilized**
 - **Caution and quality control are a must in every step, especially when analyzing several samples simultaneously.**
+- **Missing data are unavoidable**
+
+### What techniques are there?
 
 ### Tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. It focuses on SNP calling. I may add new pipelines in the future for other type of analyses. 
