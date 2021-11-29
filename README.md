@@ -75,8 +75,19 @@ Fortunately, a set of standardized formats allow communication between softwares
 - Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
 - Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
 
-Quality values are encoded using the so called 'Phred' scores using [ASCII](https://es.wikipedia.org/wiki/ASCII) codes. The beauty of this is that numbers with several digits can be represented with a single letter. For instance, symbol '!' has ASCII code 33. Illumina 1.8+ uses Phred+33, raw reads typically (0, 41).
+Quality values (Q) are encoded using the so called 'Phred' scores (P) using [ASCII](https://es.wikipedia.org/wiki/ASCII) codes. The beauty of this is that numbers with several digits can be represented with a single letter. For instance, symbol '!' has ASCII code 33. Illumina 1.8+ uses Phred+33, raw reads typically (0, 41). The relation between Q and P 
 
+	Q = -10 log10(P)
+	
+	P = 10^(-Q/10)
+
+In python, function **ord** prints ASCII code, so P of error coded with symbol 'X' would be
+
+	P = 10**(-(ord("X")-33)/10))
+	
+#EXERCISE:
+	Write a python script that returns average P from a fastq file.
+	
 **BAM** format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
 
 
