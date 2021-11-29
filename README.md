@@ -7,8 +7,7 @@ There exists dozens of procedures specific to many of the applications of NGS da
 
 **These notes are intended for variant calling with genome data.**
 
-### WARNINGGGGG 1
-
+### WARNINGGGGG 1: 
 This is a rapidly evolving field. 
 
 ### Why NGS? 
