@@ -160,8 +160,10 @@ You need to install:
 ### EXERCISE 2: 
 Install these softwares in the **bin** directory. Note: IGV can be run via [web](https://igv.org/app/). We will not use bedtools here.
 
+# PIPELINE
+
 ### Folder scheme
-I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **assembly** with the assembly and all required indices, a folder **reads** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables.
+I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **[assembly](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/assembly)** with the assembly and all required indices, a folder **[reads](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/reads)** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables. Alternatively, you can have links to these tools in your main path.
 
 	# current folder
 	DWD=$(pwd)
@@ -188,7 +190,6 @@ I suggest to have separate folders to organize the different analysis steps, but
 	bwa=$DIRBIN/bwa
 	samtools=$DIRBIN/samtools
 	bcftools=$DIRBIN/bcftools
-	picard=$DIRBIN/picard.jar
 	vcftools=$DIRBIN/vcftools
 
 	# sample to be analyzed
