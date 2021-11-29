@@ -85,10 +85,10 @@ In python, function **ord** prints ASCII code, so P of error coded with symbol '
 
 	P = 10**(-(ord("X")-33)/10))
 	
-#EXERCISE:
+### EXERCISE 1:
 	Write a python script that returns average P from a fastq file.
 	
-**BAM** format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. 
+**BAM** format is the compressed version of [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or Sequence Alignment Map. **SAM** format contains information on quality and position alignment for every read. You can visualize a BAM file.
 
 
 
