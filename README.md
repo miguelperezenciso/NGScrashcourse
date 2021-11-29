@@ -157,6 +157,9 @@ You need to install:
 
 - [bedtools](https://bedtools.readthedocs.io/en/latest/). Check also bedtools, you will need it at some point during your career.
 
+### EXERCISE 2: 
+Install these softwares in the **bin** directory. Note: IGV can be run via [web](https://igv.org/app/). We will not use bedtools here.
+
 ### Folder scheme
 I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **assembly** with the assembly and all required indices, a folder **reads** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables.
 
