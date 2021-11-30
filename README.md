@@ -47,11 +47,11 @@ Classical Sanger sequencing was a 'First' generation technology. Second or next 
 Each of these technologies may require slightly different software / options but bioinformatics pipelines are essentially the same.
 
 ### Which are the main steps?
-> 1. Sequence quality check is warranted using fastqc or similar
-> 2. Reference genome indexing
+> 1. Sequence quality check is warranted using [fastq](https://en.wikipedia.org/wiki/FASTQ_format) or similar
+> 2. Reference genome indexing.
 > 3. Sequence alignment against a reference genome.  
-> 4. Alignment file needs to be sorted and can be polished by removing PCR duplicates and quality can be recalibrated with a known set of variants.
-> 5. Variant calling and quality filtering
+> 4. Alignment file needs to be sorted and can be polished by removing PCR duplicates, quality can be recalibrated with a known set of variants.
+> 5. Variant calling and quality filtering.
 
 There exist several options for variant calling, main ones are [samtools](http://www.htslib.org/download/) and [GATK](https://gatk.broadinstitute.org/hc/en-us) based.
 
@@ -135,12 +135,18 @@ Explanation:
 
 ### Genome indexing
 - It consists of generating a rapidly accessible reference genome. 
-
 - It needs to be done only one.
-
 - Currently,  [Burrows-Wheeler algorithm](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform) is the most widely used 
-- BWA software is the most used software (Li and Durbin, 2019, Bioinformatics).
-.
+- BWA software is the most used software ([Li and Durbin, 2019, Bioinformatics](https://academic.oup.com/bioinformatics/article/25/14/1754/225615)).
+- It can be slow but needs to be done only once.
+
+The instruction in bwa is:
+	# assembly.fa is a fasta file with reference genome
+	# type bwa index for options available
+	bwa index -a bwtsw assembly.fa
+
+
+### 
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
