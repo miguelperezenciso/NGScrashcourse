@@ -198,6 +198,12 @@ By its own nature, NGS data analyses need to be done with automatic tools and is
 ### SNP annotation
 By annotation we mean identifying general genome features associated with a SNP or a genome region. For instance, SNP annotation means identifying whether the SNP resides in a coding, regulatory, intergenic region, if coding whether it is synonymous or not, if potentially deleterious or not, and so on. The easiest to use tool is Ensembl Variant Effect Predictor ([VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)). 
 
+### RNAseq
+
+
+### Metagenomics
+
+
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
 
@@ -225,6 +231,14 @@ You need to install:
 
 ### EXERCISE 2: 
 Install these softwares in the **bin** directory. Note: IGV can be run via [web](https://igv.org/app/). We will not use bedtools here.
+
+# TAKE HOME MESSAGES
+- NGS data are massive yet noisy. Quality check and filtering is a must in every step. Visualizing bam tools can be useful.
+- Experimental design is relevant. Is NGS really what you need? 
+- Numerous pipelines and software are available, specific to each application (Variant detection, RNAseq, metagenomics, …).
+- Analyses are full of subleties, do the analysis yourself.
+- Allow enough computer power, cloud services are good options.
+
 
 # PIPELINE
 
