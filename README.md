@@ -141,12 +141,26 @@ Explanation:
 - It can be slow but needs to be done only once.
 
 The instruction in bwa is:
+
 	# assembly.fa is a fasta file with reference genome
 	# type bwa index for options available
 	bwa index -a bwtsw assembly.fa
 
+### Reads alignment
+* It consists of determining the most likely origin of a set of short read sequence within a larger reference genome.
 
-### 
+* BLAST / CLUSTALW are classical tools, but you will never finish …
+
+* New challenges: number of sequences (speed) and close similarity (large impact of sequence errors).
+
+* Main Softwares: 
+	- [BWA](https://sourceforge.net/projects/bio-bwa/files/) (genome data)
+	- [Hisat](http://daehwankimlab.github.io/hisat2/hisat-3n/) (RNAseq)
+	- 
+* NGS read alignment is not an error free process nor is 100% error free. Errors can occur because wrong or incomplete genome references, incomplete search, indels, gaps, segmental duplications,...
+
+### Variant calling
+* 
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
