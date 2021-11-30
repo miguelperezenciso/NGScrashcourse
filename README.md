@@ -31,7 +31,7 @@ Note sequence data is highly redundant and that you will never get many samples 
 
 For many applications, high density genotyping is may be enough.
 
-### WARNINGGGGG 2
+### WARNINGGGGGS 2
 - **NGS data are massive yet VERY NOISY.** 
 - **You will be puzzled about how results can change depending on bioinformatics options utilized.**
 - **Do NOT outsource this step. DO IT YOURSELF or someone you know well.**
