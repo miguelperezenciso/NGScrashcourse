@@ -148,19 +148,26 @@ The instruction in bwa is:
 
 ### Reads alignment
 * It consists of determining the most likely origin of a set of short read sequence within a larger reference genome.
-
 * BLAST / CLUSTALW are classical tools, but you will never finish …
-
 * New challenges: number of sequences (speed) and close similarity (large impact of sequence errors).
-
 * Main Softwares: 
 	- [BWA](https://sourceforge.net/projects/bio-bwa/files/) (genome data)
-	- [Hisat](http://daehwankimlab.github.io/hisat2/hisat-3n/) (RNAseq)
-	- 
+	- [Hisat](http://daehwankimlab.github.io/hisat2/hisat-3n/) (RNAseq)	- 
 * NGS read alignment is not an error free process nor is 100% error free. Errors can occur because wrong or incomplete genome references, incomplete search, indels, gaps, segmental duplications,...
 
 ### Variant calling
-* 
+* It is the main goal of many studies.
+* Fraught with dangers and subtleties, among them:
+	- Base and mapping qualities
+	- Low or too high coverage
+	- Multiple alignments
+	- ...
+* Structural variants are much more difficult to identify than SNPs because reads are short and reference genomes usually contain numerous errors.
+* Sex chromosomes require specific algorithms
+* Pools also require specific software (e.g., [Raineri et al. 2012](https://doi.org/10.1186/1471-2105-13-239)).
+* **Variant filtering is essential to improve reliability.**
+* The standard format to contain SNPs is the [vcf format](https://github.com/samtools/hts-specs)
+
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
