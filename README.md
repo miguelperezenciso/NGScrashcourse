@@ -194,7 +194,10 @@ By its own nature, NGS data analyses need to be done with automatic tools and is
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/Xchr.png)
 
 	This figure represents the average depth of an X chromosome from a mammalian individual. Is the individual sequenced a male or a female? Why?
-	
+
+### SNP annotation
+By annotation we mean identifying general genome features associated with a SNP or a genome region. For instance, SNP annotation means identifying whether the SNP resides in a coding, regulatory, intergenic region, if coding whether it is synonymous or not, if potentially deleterious or not, and so on. The easiest to use tool is Ensembl Variant Effect Predictor ([VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)). 
+
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
 
