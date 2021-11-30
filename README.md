@@ -165,10 +165,30 @@ The instruction in bwa is:
 * Structural variants are much more difficult to identify than SNPs because reads are short and reference genomes usually contain numerous errors.
 * Sex chromosomes require specific algorithms
 * Pools also require specific software (e.g., [Raineri et al. 2012](https://doi.org/10.1186/1471-2105-13-239)).
-* **Variant filtering is essential to improve reliability.**
 * The standard format to contain SNPs is the [vcf format](https://github.com/samtools/hts-specs)
 
+There are essential differences between how SNPs are identified with Sanger and NGS sequencing. 
+
+![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/sanger.png)
+
+In Sanger sequencing (Figure above), a polymorphic site is identified by similar intensities of each nucelotide fluorescence. It is usually quite accurate procedure.
+
+![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/igv.png)
+
+With NGS data, variant calling is done by comparing reads against a reference a genome, a putative SNP is identified by counting the number of reads that have the reference vs those that have an alternative allele, base qualities is also considered. Since read depth is stochastic and varies largely along the genome, there will always be regions of the genome sequenced with low depth. In these regions, it is a matter of how much risk you are ready to take on whether you take a SNP as real or not. You will encounter this dilemma even at high read depths. In conclusion, SNP calling is a probabilistic decision. **For these and other reasons, raw variant calls need to be filtered.** 
+
+One parameter you need to filter for is read depth. Variants from very low depth (say < 5 - 10 depending on your average read depth) can be removed. Variants from very high depth are equally unreliable, as they can pertain to repeated regions. I recommend to filter out variants from regions with > twice average depth.
+
+**Some advices:**
+- Using several individuals simultaneously for SNP calling improves reliability, specially for middle frequency alleles.
+- Distrust indels, especially long or complex ones.
+- It is absolutely necessary to filter SNPs with bcftools filter or similar.
+- Inspect with IGV if necessary.
+
+### WARNINGGGG: Variant filtering is essential to improve reliability
+
 ### Visualization
+By its own nature, NGS data analyses need to be done with automatic tools and is impossible to visualize each result, eg, a single mmamalian genome can contain millions of SNPs. However, visualizings some specific regions can be recommended. The most popular tool is IGV. It requires an indexed bam file and a reference genome.
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
