@@ -168,6 +168,7 @@ The instruction in bwa is:
 * **Variant filtering is essential to improve reliability.**
 * The standard format to contain SNPs is the [vcf format](https://github.com/samtools/hts-specs)
 
+### Visualization
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
