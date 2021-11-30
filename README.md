@@ -7,11 +7,9 @@ There exists dozens of procedures specific to many of the applications of NGS da
 
 **These notes are intended for variant calling with genome data.**
 
-### WARNINGGGGG 1: 
-This is a rapidly evolving field. 
+## WARNINGGGGG 1: This is a rapidly evolving field. 
 
 ### Why NGS? 
-
 * To be honest, often because it is *very cheap*.
 * Because one technology fits all:
 	- De novo sequencing: assemblies of new species.
@@ -49,7 +47,11 @@ Classical Sanger sequencing was a 'First' generation technology. Second or next 
 Each of these technologies may require slightly different software / options but bioinformatics pipelines are essentially the same.
 
 ### Which are the main steps?
-Sequence data need to be aligned against a reference genome. Sequence quality check is warranted. Next, the alignment file needs to be sorted and can be polished by removing PCR duplicates and quality can be recalibrated with a known set of variants. 
+> 1. Sequence quality check is warranted using fastqc or similar
+> 2. Reference genome indexing
+> 3. Sequence alignment against a reference genome.  
+> 4. Alignment file needs to be sorted and can be polished by removing PCR duplicates and quality can be recalibrated with a known set of variants.
+> 5. Variant calling and quality filtering
 
 There exist several options for variant calling, main ones are [samtools](http://www.htslib.org/download/) and [GATK](https://gatk.broadinstitute.org/hc/en-us) based.
 
@@ -130,6 +132,15 @@ Explanation:
 **[gff3](http://www.ensembl.org/info/website/upload/gff3.html)** generic format to host annotations.
 
 **WARNING 3**: Separator is tab (\t) by default in all these formats.
+
+### Genome indexing
+- It consists of generating a rapidly accessible reference genome. 
+
+- It needs to be done only one.
+
+- Currently,  [Burrows-Wheeler algorithm](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform) is the most widely used 
+- BWA software is the most used software (Li and Durbin, 2019, Bioinformatics).
+.
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. I may add new pipelines in the future for other type of analyses. 
