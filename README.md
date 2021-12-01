@@ -39,7 +39,7 @@ For many applications, high density genotyping is may be enough.
 - **Missing data are unavoidable.**
 
 ## QUALITY CONTROL IS A MUST IN EVERY NGS ANALYSIS STEP 
-### VISUALIZATION TOOLS CAN REALLY HELP.
+### VISUALIZATION TOOLS CAN HELP.
 
 ### What techniques are there?
 Classical Sanger sequencing was a 'First' generation technology. Second or next generation sequencing was initially [454 technique](https://en.wikipedia.org/wiki/454_Life_Sciences) quickly supersed by [Illumina's technologies](https://en.wikipedia.org/wiki/Illumina_dye_sequencing). More recently, the third generation sequencing technologies deliver much longer reads in lower quantity and of lower quality. Representatives are [PacBio](https://www.sciencedirect.com/science/article/pii/S1672022915001345) and [Oxford nanopore](https://en.wikipedia.org/wiki/Nanopore_sequencing).
@@ -199,6 +199,8 @@ By its own nature, NGS data analyses need to be done with automatic tools and is
 By annotation we mean identifying general genome features associated with a SNP or a genome region. For instance, SNP annotation means identifying whether the SNP resides in a coding, regulatory, intergenic region, if coding whether it is synonymous or not, if potentially deleterious or not, and so on. The easiest to use tool is Ensembl Variant Effect Predictor ([VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)). 
 
 ### Experimental design
+Obtaining sequence is far more expensive than genotyping using a commercial array. Sequencing provides a list of variants free of ascertainment bias, as opposed to array genotyping. Choice of technology then needs to be driven by the target of the experiment. Even if sequencing allows to uncover all variants, it is not free from limitations: (i) expensive, (ii) cumbersome bioinformatics analysis, (iii) variant calling is an error prone process itself. For a given budget, how would you allocate resources, would you sequence more individuals at sahllow depth or few at high depth?
+
 
 
 ### RNAseq
