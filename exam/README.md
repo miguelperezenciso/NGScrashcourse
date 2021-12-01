@@ -5,9 +5,12 @@ These are questions from previous exams, I would really appreciate you send me p
 - Why is NGS so popular? What is your opinion in this respect, do you believe we do not need so much sequence data?
 - Can you name some public repositories for NGS data?
 - In what circumstances would Sanger sequencing be preferred to NGS?
+- In what circumstances can high density genotyping, say using a commercial array, be preferred to NGS? 
 - Why is it important to filter by quality in any NGS bioiinfromatics step?
 - What is the advantage of using Phred scores for coding base quality?
 - Name some differences between NGS and Sanger sequencing.
 - Who was Fred Sanger? Why is he famous for?
 - What are the main differences between 'second' and 'third' NGS technologies?
 - Why are structural variants difficult to detect with NGS?
+- Suppose you have money to sequence 100 individuals at 1x or 1 individual at 100x, which one would you choose? would any of these extremes be useful and what for in case they are useful?
+- Ancient DNA can be sequenced, but do you know which are the main problems we face?
