@@ -213,7 +213,29 @@ By annotation we mean identifying general genome features associated with a SNP 
 - Analyses are full of subleties, do the analysis yourself.
 - Allow enough computer power, cloud services are good options.
 
+==========
 # PIPELINE
+==========
+
+### Folder scheme
+I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **[assembly](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/assembly)** with the assembly and all required indices, a folder **[reads](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/reads)** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **[bin]((https://github.com/miguelperezenciso/NGScrashcourse/tree/master/bin)** folder contains executables. Alternatively, you can have links to these tools in your main path.
+
+	# current folder
+	DWD=$(pwd)
+	# this folder should contain the assembly
+	DIRASSEMBLY=$DWD/assembly
+	## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
+	ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic.fna
+	# this should contain the reads
+	DIRDATA=$DWD/reads
+	# this contains the binaries, alternatively, they can be accessed via default path
+	DIRBIN=$DWD/bin
+	# this will contain the alignment files
+	DIRBAM=$DWD/bamfiles
+	mkdir $DIRBAM
+	# this will contain the vcf files
+	DIRVCF=$DWD/varfiles
+	mkdir $DIRVCF
 
 ### Main tools needed
 Dozens of tools have been developed for NGS data, and each kind of data (eg, genomic, RNAseq, microbiome...) requires its own specific tools. Here I focus on SNP calling. 
@@ -243,28 +265,8 @@ You need to install:
 ### EXERCISE 2: 
 Install these softwares in the **bin** directory. Note: IGV can be run via [web](https://igv.org/app/). We will not use bedtools here.
 
-### Folder scheme
-I suggest to have separate folders to organize the different analysis steps, but this is very personal. In the exercise, we have a folder **[assembly](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/assembly)** with the assembly and all required indices, a folder **[reads](https://github.com/miguelperezenciso/NGScrashcourse/tree/master/reads)** with all sequence data, bam files are stored in **bamfiles** directoy and vcf files in **varfiles**. Optionally, a **bin** folder contains executables. Alternatively, you can have links to these tools in your main path.
-
-	# current folder
-	DWD=$(pwd)
-	# this should contain the assembly
-	DIRASSEMBLY=$DWD/assembly
-	## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
-	ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic.fna
-	# this should contain the reads
-	DIRDATA=$DWD/reads
-	# this contains the binaries, alternatively, they can be accessed via default path
-	DIRBIN=$DWD/bin
-	# this will contain the alignment files
-	DIRBAM=$DWD/bamfiles
-	mkdir $DIRBAM
-	# this will contain the vcf files
-	DIRVCF=$DWD/varfiles
-	mkdir $DIRVCF
-
-
 ### Definitions
+Here I assign values to some variables such that the pipleine can be easily changed. Remmember in shell $NAME refers to the value of variable NAME.
 
 	# define variables with program names or install in your path
 	fastqc=$DIRBIN/FastQC/fastqc
@@ -276,7 +278,7 @@ I suggest to have separate folders to organize the different analysis steps, but
 	# sample to be analyzed
 	OUT=Individual1
 
-	# reads from sample, they are in $DIRDATA
+	# reads from sample $OUT, they are in $DIRDATA
 	READS_PE1=${OUT}.out.fas.1.fq.gz
 	READS_PE2=${OUT}.out.fas.2.fq.gz
 
