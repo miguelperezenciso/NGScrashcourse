@@ -203,13 +203,20 @@ Obtaining sequence is far more expensive than genotyping using a commercial arra
 
 We explored this issue in [Nevado et al. (2014a)]( https://doi.org/10.1111/mec.12693) and in [Nevado et al. 2014b](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12286). We find that relying on genotype calls provides biased estimates of population genetic statistics at low to moderate read depth (2–8×). Direct estimation without calling genotypes returns the most accurate estimates of variability and of most SFS tests investigated, including at low read depth (2–4×). Studies without species-specific reference genome should aim for low read depth and avoid genotype calling whenever individual genotypes are not essential. Otherwise, aiming for moderate to high depth at the expense of number of individuals is recommended.
 
-![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/pieliner.png)
+![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/pipeliner.png)
 
 The above figure from nevado et al. (2014b) shows several strategies with similar costs, barred from library contruction costs, that range from 50 individuals at 4x depth to 4 individuals at 50x depth. Upper panel shows the percentage of original heterozygous SNP genotypes that are correctly identified and bottom panel shows the number segregating sites identified with each experimental design. Note a depth of 10 - 20 x can be an optimum, increasing beyond that does not increase recovery but decreases the number of sites found because fewer individuals are sequenced.
 
-
-
 ### RNAseq
+Multiple applications: discovery of new transcripts, isoforms, and non coding RNAs, quantification of (differential) expression, allele specific expression, improve anotation.
+
+Best if annotation file available.
+
+Paired end needed if you wish to discover isoforms, SE if only expression quantification
+
+Mapping is normally done allowing ambiguity to study expression in paralogs.
+
+Popular pipeline: Hisat2[]
 
 
 ### Metagenomics
