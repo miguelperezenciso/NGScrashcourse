@@ -4,9 +4,10 @@ Dozens of tools have been developed for NGS data, and each kind of data (eg, gen
 
 ![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/software.png)
 
-First, move to a $DIRBIN folder where I install all tools for convenience.
+First, move to **$DIRBIN** folder where I install all tools for convenience.
 
 You need to install:
+
 [**FastQC**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): This is a java tool that provides graphics of sequence quality. 
 Documentation can be found [here](https://raw.githubusercontent.com/s-andrews/FastQC/master/INSTALL.txt).
 You can run FastQC in one of two modes, either as an interactive graphical application.
@@ -41,12 +42,12 @@ You can run FastQC in one of two modes, either as an interactive graphical appli
 
 	# download from https://sourceforge.net/projects/vcftools
 	make 
-	# move executable to bin or to add to path.
+	# move executable to bin or add to path.
 
 [**IGV**](http://software.broadinstitute.org/software/igv/). this is a visualizer of bam files.
 
 [**bedtools**](https://bedtools.readthedocs.io/en/latest/). Very powerful tool for manipulating and filtering bed files. You will need it at some point during your career.
 
-**NOTE**: To add a given binary located in folder FOLDER to your path
+**NOTE**: To add a given binary located in folder $DIRBIN to your path
 
-	export PATH=FOLDER:$PATH
+	export PATH=$DIRBIN:$PATH
