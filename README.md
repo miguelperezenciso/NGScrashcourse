@@ -201,7 +201,7 @@ By annotation we mean identifying general genome features associated with a SNP 
 ### Experimental design
 Obtaining sequence is far more expensive than genotyping using a commercial array. Sequencing provides a list of variants free of ascertainment bias, as opposed to array genotyping. Choice of technology then needs to be driven by the target of the experiment. Even if sequencing allows to uncover all variants, it is not free from limitations: (i) expensive, (ii) cumbersome bioinformatics analysis, (iii) variant calling is an error prone process itself. For a given budget, how would you allocate resources, would you sequence more individuals at sahllow depth or few at high depth?
 
-We explored this issue in [Nevado et al. (2014)]( https://doi.org/10.1111/mec.12693) and in [Nevado et al. 2014](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12286)
+We explored this issue in [Nevado et al. (2014)]( https://doi.org/10.1111/mec.12693) and in [Nevado et al. 2014](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12286). We find that relying on genotype calls provides biased estimates of population genetic statistics at low to moderate read depth (2–8×). Direct estimation without calling genotypes returns the most accurate estimates of variability and of most SFS tests investigated, including at low read depth (2–4×). Studies without species-specific reference genome should aim for low read depth and avoid genotype calling whenever individual genotypes are not essential. Otherwise, aiming for moderate to high depth at the expense of number of individuals is recommended.
 
 
 
