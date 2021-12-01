@@ -1,46 +1,36 @@
 #!/bin/bash -x
-# NGS bwa + samtools + picard pipeline
-# M Perez-Enciso
-# mperezenciso@gmail.com
+#
+# What is new: 2020-12-01 11:06:26 
+#  - New GATK options for multisample calling
+#  - GATK includes picard
+#  - rm download from SRA, need fixing
+#  - some notation changes
 
-##############################################################################################
-#                              DIRECTORIES                                                   #
-# this arrangement is simply a proposal, you can arrange as fits you best                    #
-##############################################################################################
-# current folder
-DWD=$(pwd)
-# this should contain the assembly
-DIRASSEMBLY=$DWD/assembly
-## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
-ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic.fna
-# this should contain the reads
-DIRDATA=$DWD/reads
-# this contains the binaries, alternatively, they can be accessed via default path
-DIRBIN=$DWD/bin
-# this will contain the alignment files
-DIRBAM=$DWD/bamfiles
-mkdir $DIRBAM
-# this will contain the vcf files
-DIRVCF=$DWD/varfiles
-mkdir $DIRVCF
+# What is new: 2018-11-30 11:01:46 
+#  - option to download SRA sequences
+#  - multisample variant calling, remove depth restriction
+#  - include vcftools
+#  - new exercises
+# NGS bwa + samtools + GATK pipeline
+# M Perez-Enciso
+# miguel.perez@uab.es
+
 
 # Exercise: browse the corresponding websites and get an idea of what they are for and general options
 #     https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 #     http://bio-bwa.sourceforge.net/
-#     http://www.htslib.org/
 #     https://software.broadinstitute.org/gatk/
-#     http://broadinstitute.github.io/picard/
 #     http://software.broadinstitute.org/software/igv/
 #     https://vcftools.github.io/index.html
-# Check also bedtools, you will need it at some point during your career
 #     https://bedtools.readthedocs.io/en/latest/
 
 
 ##############################################################################################
 #                              EXECUTABLES                                                   #
-#                   download and install in bin directory                                    #
+#  download and install in bin directory
 ##############################################################################################
-# FastQC download from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+# FastQC download from https://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc
+
 # bwa: https://sourceforge.net/projects/bio-bwa/files/
 	git clone https://github.com/lh3/bwa.git
 	cd bwa; make
@@ -48,55 +38,76 @@ mkdir $DIRVCF
 # once extracting, for each of them 
         make
 # and move executable to $DIRBIN
-# picard: http://broadinstitute.github.io/picard/
-# and move picard.jar to $DIRBIN
-
+# GATK: download from https://github.com/broadinstitute/gatk/releases
+# unzip and move to $DIRBIN
 # vcftools: https://sourceforge.net/projects/vcftools/
         make
 # and move executable to $DIRBIN
-
 # igv: http://software.broadinstitute.org/software/igv/
+
+Here it runs via web: https://igv.org/app/
+
+##############################################################################################
+#                              DIRECTORIES                                                   #
+# this arrangement is simply a proposal, you can arrange as fits you best                    #
+##############################################################################################
+DWD=$(pwd)
+# this contains the assembly
+DIRASSEMBLY=$DWD/assembly
+## Downloaded from https://www.ncbi.nlm.nih.gov/genome/474?genome_assembly_id=300158
+ASSEMBLY=GCF_000027325.1_ASM2732v1_genomic
+# this contains the reads
+DIRDATA=$DWD/reads
+# this contains the binaries
+DIRBIN=$DWD/bin
+# this will contain the alignment files
+DIRBAM=$DWD/bamfiles
+# this will contain the vcf files
+DIRVCF=$DWD/varfiles
+
 
 # define variables with program names or install in your path
 fastqc=$DIRBIN/FastQC/fastqc
 bwa=$DIRBIN/bwa
 samtools=$DIRBIN/samtools
 bcftools=$DIRBIN/bcftools
-picard=$DIRBIN/picard.jar
+# adjust version as needed
+gatk=$DIRBIN/gatk-4.2.3.0/gatk
 vcftools=$DIRBIN/vcftools
 
+# check what a variable contains
+echo $vcftools
 
 ##############################################################################################
 #                              SAMPLE NAME AND MAIN PARAMETERS                               #
 ##############################################################################################
 
-# sample to be analyzed
-OUT=Individual1
-
-# reads from sample, they are in $DIRDATA
-READS_PE1=${OUT}.out.fas.1.fq.gz
-READS_PE2=${OUT}.out.fas.2.fq.gz
-
-# global variables
+################# global variables
 MINCOV=5        # min coverage
 MAXCOV=30       # maximum coverage computed later as 2xmean_depth+1
-SNPQ=10         # min snp quality
+SNPQ=20         # min snp quality
 MAPQ=20         # min map quality
 BASEQ=20        # min base quality
 NP=2            # no. of threads
+
+# samples to be analyzed
+sample1=Individual1
+sample2=Individual2
 
 
 ################################################################################
 # 0. INDEXING THE GENOME Build index sequence archive for reference sequence
 ################################################################################
    cd $DIRASSEMBLY
-   $bwa index -a bwtsw $DIRASSEMBLY/$ASSEMBLY
+   $bwa index -a bwtsw $DIRASSEMBLY/$ASSEMBLY.fna
 
    # creating index with samtools
-   $samtools faidx $ASSEMBLY
+   $samtools faidx $ASSEMBLY.fna
 
    # dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
-   java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
+   $gatk CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY.fna O=$DIRASSEMBLY/$ASSEMBLY.dict
+
+   # back to working directory
    cd $DWD
 
 ################################################################################
@@ -106,81 +117,129 @@ NP=2            # no. of threads
   cd $DIRDATA
   # run interactively 
   $fastqc
-  # or in batch 
-  zcat $DIRDATA/$READS_PE1 | $fastqc stdin1
-  zcat $DIRDATA/$READS_PE2 | $fastqc stdin2
+  # or in batch , results should be in $DIRDATA folder
+  zcat $DIRDATA/${sample1}.out.fas.1.fq.gz | $fastqc stdin
+  zcat $DIRDATA/${sample1}.out.fas.2.fq.gz | $fastqc stdin
   cd $DWD
 
 ################################################################################
-# 2. BWA ALIGNMENT AND GATK REALIGNMENT (~5-12h)
+# 2. BWA ALIGNMENT AND GATK REALIGNMENT 
 ################################################################################
+# reads are in files reads are in file ${sample}.out.fas.1.fq.gz and ${sample}.out.fas.2.fq.gz
 
    # make a directory for that sample
-   mkdir $DIRBAM/$OUT
-   cd $DIRBAM/$OUT
+   mkdir $DIRBAM/$sample1
+   cd $DIRBAM/$sample1
 
    # This adds a tag to the alignment
-   TAG="@RG\tID:$OUT\tSM:$OUT"
-   time $bwa mem -t $NP -R $TAG $DIRASSEMBLY/$ASSEMBLY $DIRDATA/$READS_PE1 $DIRDATA/$READS_PE2 | \
-        $samtools view -b - > $OUT.bam
+   TAG="@RG\tID:$sample1\tSM:$sample1"
+
+   # Names of files containing paired end reads for individual $sample1
+   READS_PE1=$DIRDATA/${sample1}.out.fas.1.fq.gz
+   READS_PE2=$DIRDATA/${sample1}.out.fas.2.fq.gz
+
+   # alignment, reads are in file ${sample1}.out.fas.1.fq.gz and ${sample1}.out.fas.2.fq.gz
+   time $bwa mem -t $NP -R $TAG $DIRASSEMBLY/$ASSEMBLY.fna $READS_PE1 $READS_PE2 | \
+        $samtools view -b - > $sample1.bam
 
    # sort
-   time $samtools sort -O bam -T tmp $OUT.bam > $OUT.sort.bam
-   time $samtools index $OUT.sort.bam
+   time $samtools sort -O bam -T tmp $sample1.bam > $sample1.sort.bam
+   time $samtools index $sample1.sort.bam
 
-   # rm duplicates with picard
-   time java -jar $picard MarkDuplicates \
-                         REMOVE_DUPLICATES=true \
-                         INPUT=$OUT.sort.bam \
-                         OUTPUT=$OUT.rmdup.bam \
-                         METRICS_FILE=metrics.out
+   # rm duplicates
+   time $gatk MarkDuplicatesSpark \
+                         -I $sample1.sort.bam \
+                         -O $sample1.rmdup.bam \
+                         --remove-sequencing-duplicates
 
    # recalibrate base quality with GATK if you have a list of known SNPs.
    # check https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165
 
    # depth file
-   time $samtools depth -q $BASEQ -Q $MAPQ $OUT.rmdup.bam | awk '{print $3}'  | \
-                 sort | uniq -c | sort -n -k2 > $OUT.rmdup.depth
+   time $samtools depth -q $BASEQ -Q $MAPQ $sample1.rmdup.bam | awk '{print $3}'  | \
+                 sort | uniq -c | sort -n -k2 > $sample1.rmdup.depth
    # Exercise: find out what this instruction does
-
-   # new indexed file
-   $samtools index $OUT.rmdup.bam
+   # Exercise: what is the format of *depth file?
 
    # computes mean and max depth to be used, min depth is defined in $MINCOV
-   Q=`awk '$2>0 {a+=$1*$2;n+=$1} END {print a/n}' "$DIRBAM/$OUT/$OUT.rmdup.depth" `
+   Q=`awk '$2>0 {a+=$1*$2;n+=$1} END {print a/n}' "$DIRBAM/$sample1/$sample1.rmdup.depth" `
    # recommended maximum depth is twice average depth
    MAXCOV=`echo "tmp=2*($Q+0.5); tmp /= 1; tmp" | bc`
-   echo 'sample meanDepth maxDepth ' $OUT $Q $MAXCOV
+   echo 'sample meanDepth maxDepth ' $sample1 $Q $MAXCOV
+   # Exercise: find out what instructions above do
+   #           what is the bc shell instruction?
 
    #--> EXERCISE
    #    How many reads in each bam file:  samtools flagstat
    #    How many reads with map quality > 20:  samtools view -q 20 $OUT.bam | wc -l
+   #    Perform alignment for sample Individual2 (sample2=Individual2)
 
    cd $DWD
 
 ################################################################################
-# 3. $samtools SNP CALLING with gVCF blocks 
+# 3a. samtools SNP CALLING with gVCF blocks
 ################################################################################
 
    cd $DIRVCF
 
    # check meaning of options typing "$bcftools"
-   $bcftools mpileup -Ov -g $MINCOV -q $MAPQ -Q $BASEQ -d $MAXCOV -f $DIRASSEMBLY/$ASSEMBLY \
-      $DIRBAM/$OUT/$OUT.rmdup.bam | \
-      $bcftools call -g$MINCOV -mOz -o $OUT.gvcf.gz
+   $bcftools mpileup -Ov -g $MINCOV -q $MAPQ -Q $BASEQ -d $MAXCOV -f $DIRASSEMBLY/$ASSEMBLY.fna \
+      $DIRBAM/$sample1/$sample1.rmdup.bam | \
+      $bcftools call -g$MINCOV -mOz -o $sample1.gvcf.gz
 
    # filtering (see https://github.com/samtools/bcftools/wiki/HOWTOs#variant-filtering)
    $bcftools filter -O v -g3 -s LOWQUAL -e"%QUAL<$SNPQ || %MAX(INFO/DP)<$MINCOV || %MAX(INFO/DP)>$MAXCOV" \
-      $OUT.gvcf.gz | $bcftools view -f PASS -O z > $OUT.flt.gvcf.gz
+      $sample1.gvcf.gz | $bcftools view -f PASS -O z > $sample1.flt.gvcf.gz
+
+   # Multiple sample caling with samtools is performed adding multiple bam files in bcftools
+   # either listing all bam files or specifying a bam list file with -b option
+   # http://www.htslib.org/workflow/#mapping_to_variant
+   # http://samtools.github.io/bcftools/bcftools.html#mpileup
 
    #--> EXERCISE
    #    Check the meaning of each option (eg, type $bcftools)
    #    Inspect the vcf file, what is each field?
    #    Do you find any indel?
-   #    How many variants were filtered out (compare $OUT.flt.gvcf and $OUT.gvcf)? why?
+   #    How many variants were filtered out (compare $sample1.flt.gvcf and $sample1.gvcf)? why?
    #    Count how many heterozygous snps, homozygous snps, why you find only one class?
 
    cd $DWD
+
+################################################################################
+# 3b. GATK Multiple sample SNP CALLING with gVCF blocks
+################################################################################
+# https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
+# single sample calling
+
+   cd $DIRVCF
+
+   $gatk --java-options "-Xmx4g" HaplotypeCaller \
+      -R $DIRASSEMBLY/$ASSEMBLY.fna \
+      -I $DIRBAM/$sample1/$sample1.rmdup.bam \
+      -O $sample1.g.vcf.gz \
+      -ERC GVCF
+
+   # You need to align reds for sample two
+   $gatk --java-options "-Xmx4g" HaplotypeCaller \
+      -R $DIRASSEMBLY/$ASSEMBLY.fna \
+      -I $DIRBAM/$sample2/$sample2.rmdup.bam \
+      -O $sample2.g.vcf.gz \
+      -ERC GVCF
+
+   # Combine gvcfs
+   $gatk CombineGVCFs \
+      -R $DIRASSEMBLY/$ASSEMBLY.fna \
+      --variant $sample1.g.vcf.gz \
+      --variant $sample2.g.vcf.gz \
+      -O cohort.g.vcf.gz
+
+   # Multisample calling
+   $gatk --java-options "-Xmx4g" GenotypeGVCFs \
+      -R $DIRASSEMBLY/$ASSEMBLY.fna \
+      -V cohort.g.vcf.gz \
+      -O cohort.vcf.gz
+
+    cd $DWD
 
 ####################################################################################
 # 4. Visualize some SNPs with IGV (http://software.broadinstitute.org/software/igv/) 
@@ -189,32 +248,6 @@ NP=2            # no. of threads
 # Start IGV (you need java8)
 # You need to load the Micoplasma genome in $DIRASSEMBLY
 java -Xmx1000m -jar $igv
-
-########################################################################################
-# 5. OPTIONAL: Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra) 
-########################################################################################
-    # WARNING: this can take a lot of time and resources !!!!
-    # You need faster-qdump and aspera
-    # To install aspera
-    #    - https://www.ncbi.nlm.nih.gov/books/NBK242625/
-    #    - http://downloads.asperasoft.com/connect2/
-
-    
-    ASPERA=~/.aspera
-
-    cd $DIRDATA
-    # Choose a read to download, should start with SRR, SRX, ERRR
-    SRR=ERR4868557 # corresponds to a M genitalium sequenced with MiSeq
-    # inspect info about SRR6650027
-    # this is the directory holding the compressed sequences
-    DIRSRR=/sra/sra-instant/reads/ByRun/sra/${SRR:0:3}/${SRR:0:6}/$SRR
-    # this downloads the sequences in $DIRDATA/SRR directory
-    $ASPERA/connect/bin/ascp -i  $ASPERA/connect/etc/asperaweb_id_dsa.openssh \
-                                 -k1 -Tr -l100m anonftp@ftp-private.ncbi.nlm.nih.gov:$DIRSRR $DIRDATA
-    cd $SRR
-    # uncompress into fastq, faster-qdump can be found in https://github.com/ncbi/sra-tools
-    fasterq-dump -e $NP --split-files $SRR.sra -O $DIRDATA/$SRR
-    rm $SRA.sra
 
 exit 0
 
@@ -229,18 +262,9 @@ exit 0
 #      - SRA ERP004545 corresponds to M genitalium
 #   3- Browse galaxy platform
 #      - https://usegalaxy.org/
-#   4- Browse MiSeq, Oxford nanopore technologies
+#   4- Browse MiSeq, Oxford nanopore technologies, PacBio
 ####################################################################################
 
-####################################################################################
-# Exercises
-####################################################################################
-#   1- Each of you choose a different strain from experiment ERP004545, you need to install aspera
-#   2- Run fastqc, Perform alignment as described, each of you individually
-#   3- Get together in groups and perform multiple snp calling with about 5-10 samples together
-#      Note: remove the maximum depth option     
-#   4- Using vcftools, do a plot of allele frequency and missingness across all SNPs
-####################################################################################
 
 
 
