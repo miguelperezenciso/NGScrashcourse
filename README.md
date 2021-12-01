@@ -273,6 +273,7 @@ Here I assign values to some variables such that the pipleine can be easily chan
 	bwa=$DIRBIN/bwa
 	samtools=$DIRBIN/samtools
 	bcftools=$DIRBIN/bcftools
+	gatk=$DIRBIN/gatk-4.2.3.0/gatk  # adjust version as needed
 	vcftools=$DIRBIN/vcftools
 
 	# sample to be analyzed
@@ -299,8 +300,9 @@ Here I assign values to some variables such that the pipleine can be easily chan
 	$samtools faidx $ASSEMBLY
 
 	# dictionary with picard tools' CreateSequenceDictionary (same name -> dict=reference)
-	java -jar $picard CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY O=$DIRASSEMBLY/$ASSEMBLY.dict
-	# back
+   	$gatk CreateSequenceDictionary R=$DIRASSEMBLY/$ASSEMBLY.fna O=$DIRASSEMBLY/$ASSEMBLY.dict
+   
+	# back to working directory
 	cd $DWD
 
 ### Step 1: Check reads quality
@@ -310,7 +312,11 @@ Here I assign values to some variables such that the pipleine can be easily chan
 	zcat $DIRDATA/$READS_PE1 | $fastqc stdin
 	# move back to wkng folder
 	cd $DWD
-	
+
+You should see something like 
+
+![]((https://github.com/miguelperezenciso/NGScrashcourse/blob/master/fastqc.png)) 
+
 ### Step 2 BWA alignment and refinment
 This is the most expensive part, both in CPU and memory usage
 
