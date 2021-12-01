@@ -208,15 +208,19 @@ We explored this issue in [Nevado et al. (2014a)]( https://doi.org/10.1111/mec.1
 The above figure from nevado et al. (2014b) shows several strategies with similar costs, barred from library contruction costs, that range from 50 individuals at 4x depth to 4 individuals at 50x depth. Upper panel shows the percentage of original heterozygous SNP genotypes that are correctly identified and bottom panel shows the number segregating sites identified with each experimental design. Note a depth of 10 - 20 x can be an optimum, increasing beyond that does not increase recovery but decreases the number of sites found because fewer individuals are sequenced.
 
 ### RNAseq
-Multiple applications: discovery of new transcripts, isoforms, and non coding RNAs, quantification of (differential) expression, allele specific expression, improve anotation.
+Sequencing RNA vs expression arrays offers some important advantages:
+* Discovery of new transcripts, isoforms, and non coding RNAs.
+* Quantification of (differential) expression. 
+* Allele specific expression, 
+* Improve anotation.
 
 Best if annotation file available.
 
-Paired end needed if you wish to discover isoforms, SE if only expression quantification
+Paired end needed if you wish to discover isoforms, SE is enough if only expression quantification is required.
 
 Mapping is normally done allowing ambiguity to study expression in paralogs.
 
-Popular pipeline: Hisat2[]
+Popular pipeline: [Hisat2](http://daehwankimlab.github.io/hisat2/).
 
 
 ### Metagenomics
