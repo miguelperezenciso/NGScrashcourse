@@ -315,51 +315,59 @@ Here I assign values to some variables such that the pipleine can be easily chan
 
 You should see something like 
 
-![]((https://github.com/miguelperezenciso/NGScrashcourse/blob/master/fastqc.png)) 
+![](https://github.com/miguelperezenciso/NGScrashcourse/blob/master/fastqc.png)
 
 ### Step 2 BWA alignment and refinment
 This is the most expensive part, both in CPU and memory usage
 
 	# make a directory for that sample
-	mkdir $DIRBAM/$OUT
-	cd $DIRBAM/$OUT
+   	mkdir $DIRBAM/$sample1
+   	cd $DIRBAM/$sample1
 
-	# This adds a tag to the alignment
-	TAG="@RG\tID:$OUT\tSM:$OUT"
-	time $bwa mem -t $NP -R $TAG $DIRASSEMBLY/$ASSEMBLY $DIRDATA/$READS_PE1 $DIRDATA/$READS_PE2 $samtools view -b - > $OUT.bam
+  	# This adds a tag to the alignment
+   	TAG="@RG\tID:$sample1\tSM:$sample1"
 
-	# sort
-	time $samtools sort -O bam -T tmp $OUT.bam > $OUT.sort.bam
-	time $samtools index $OUT.sort.bam
+   	# Names of files containing paired end reads for individual $sample1
+   	READS_PE1=$DIRDATA/${sample1}.out.fas.1.fq.gz
+   	READS_PE2=$DIRDATA/${sample1}.out.fas.2.fq.gz
 
-	# rm duplicates with picard, this removes potential PCR duplicates
-	time java -jar $picard MarkDuplicates \
-                         REMOVE_DUPLICATES=true \
-                         INPUT=$OUT.sort.bam \
-                         OUTPUT=$OUT.rmdup.bam \
-                         METRICS_FILE=metrics.out
+   	# alignment, reads are in file ${sample1}.out.fas.1.fq.gz and ${sample1}.out.fas.2.fq.gz
+   	time $bwa mem -t $NP -R $TAG $DIRASSEMBLY/$ASSEMBLY.fna $READS_PE1 $READS_PE2 | \
+        	$samtools view -b - > $sample1.bam
 
-	# recalibrate base quality with GATK if you have a list of known SNPs.
-	# check https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165
+   	# sort
+   	time $samtools sort -O bam -T tmp $sample1.bam > $sample1.sort.bam
+   	time $samtools index $sample1.sort.bam
 
-	# depth file
-	time $samtools depth -q $BASEQ -Q $MAPQ $OUT.rmdup.bam | awk '{print $3}'  | \
-                 sort | uniq -c | sort -n -k2 > $OUT.rmdup.depth
-	# Exercise: find out what this instruction does
+   	# remove PCR duplicates
+   	time $gatk MarkDuplicatesSpark \
+                         -I $sample1.sort.bam \
+                         -O $sample1.rmdup.bam \
+                         --remove-sequencing-duplicates
 
-	# new indexed file
-	$samtools index $OUT.rmdup.bam
+   	# recalibrate base quality with GATK if you have a list of known SNPs.
+   	# check https://software.broadinstitute.org/gatk/best-practices/workflow?id=11165
 
-	# computes mean and max depth to be used, min depth is defined in $MINCOV
-	Q=`awk '$2>0 {a+=$1*$2;n+=$1} END {print a/n}' "$DIRBAM/$OUT/$OUT.rmdup.depth" `
-	# recommended maximum depth is twice average depth
-	MAXCOV=`echo "tmp=2*($Q+0.5); tmp /= 1; tmp" | bc`
-	echo 'sample meanDepth maxDepth ' $OUT $Q $MAXCOV
+   	# depth file
+   	time $samtools depth -q $BASEQ -Q $MAPQ $sample1.rmdup.bam | awk '{print $3}'  | \
+                 sort | uniq -c | sort -n -k2 > $sample1.rmdup.depth
+   	# Exercise: find out what this instruction does
+   	# Exercise: what is the format of *depth file?
 
-	#--> EXERCISE
-	#    How many reads in each bam file:  samtools flagstat
-	#    How many reads with map quality > 20:  samtools view -q 20 $OUT.bam | wc -l
+   	# computes mean and max depth to be used, min depth is defined in $MINCOV
+   	Q=`awk '$2>0 {a+=$1*$2;n+=$1} END {print a/n}' "$DIRBAM/$sample1/$sample1.rmdup.depth" `
+   	# recommended maximum depth is twice average depth
+   	MAXCOV=`echo "tmp=2*($Q+0.5); tmp /= 1; tmp" | bc`
+   	echo 'sample meanDepth maxDepth ' $sample1 $Q $MAXCOV
+   	# Exercise: find out what instructions above do
+   	#           what is the bc shell instruction?
 
+   	#--> EXERCISE
+   	#    How many reads in each bam file:  samtools flagstat
+   	#    How many reads with map quality > 20:  samtools view -q 20 $OUT.bam | wc -l
+   	#    Perform alignment for sample Individual2 (sample2=Individual2)
+
+   	# back home
 	cd $DWD
 
 ### Step 3. samtools SNP CALLING with gVCF blocks 
