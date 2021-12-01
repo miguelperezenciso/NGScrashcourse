@@ -226,11 +226,11 @@ Popular pipeline: [Hisat2](http://daehwankimlab.github.io/hisat2/).
 [QIIME](http://qiime.org/)
 
 # TAKE HOME MESSAGES
-- **NGS data are massive yet noisy. Quality check and filtering is a must in every step. Visualizing bam tools can be useful.
-- **Experimental design is relevant. Is NGS really what you need? 
-- **Numerous pipelines and software are available, specific to each application (Variant detection, RNAseq, metagenomics, …).
-- **Analyses are full of subleties, do the analysis yourself.
-- **Allow enough computer power, cloud services are good options.
+- **NGS data are massive yet noisy. Quality check and filtering is a must in every step. Visualizing bam tools can be useful.**
+- **Experimental design is relevant. Is NGS really what you need?**
+- **Numerous pipelines and software are available, specific to each application (Variant detection, RNAseq, metagenomics, …).**
+- **Analyses are full of subleties, do the analysis yourself.**
+- **Allow enough computer power, cloud services are good options.**
 
 ==========
 # PIPELINE
