@@ -370,28 +370,67 @@ This is the most expensive part, both in CPU and memory usage
    	# back home
 	cd $DWD
 
-### Step 3. samtools SNP CALLING with gVCF blocks 
-This is the trickiest step, the one with most options and highly dependent on depth and sequence quality. Filtering SNPs is a must. Distrust indels more than SNPs. Beware of options with snp calling using several samples together. 
+### Step 3a. samtools single sample SNP CALLING with gVCF blocks 
+This is the trickiest step, the one with most options and highly dependent on depth and sequence quality. Filtering SNPs is a must. Distrust indels more than SNPs. Beware of options with snp calling using several samples together. In this step we use samtools / bcftools pipeline.
 
-	cd $DIRVCF
+  	cd $DIRVCF
 
-	# check meaning of options typing "$bcftools"
-	$bcftools mpileup -Ov -g $MINCOV -q $MAPQ -Q $BASEQ -d $MAXCOV -f $DIRASSEMBLY/$ASSEMBLY \
-      		$DIRBAM/$OUT/$OUT.rmdup.bam | \
-      		$bcftools call -g$MINCOV -mOz -o $OUT.gvcf.gz
+   	# check meaning of options typing "$bcftools"
+   	$bcftools mpileup -Ov -g $MINCOV -q $MAPQ -Q $BASEQ -d $MAXCOV -f $DIRASSEMBLY/$ASSEMBLY.fna \
+     		$DIRBAM/$sample1/$sample1.rmdup.bam | \
+      		$bcftools call -g$MINCOV -mOz -o $sample1.gvcf.gz
 
-	# filtering (see https://github.com/samtools/bcftools/wiki/HOWTOs#variant-filtering)
-	$bcftools filter -O v -g3 -s LOWQUAL -e"%QUAL<$SNPQ || %MAX(INFO/DP)<$MINCOV || %MAX(INFO/DP)>$MAXCOV" \
-      		$OUT.gvcf.gz | $bcftools view -f PASS -O z > $OUT.flt.gvcf.gz
+   	# filtering (see https://github.com/samtools/bcftools/wiki/HOWTOs#variant-filtering)
+   	$bcftools filter -O v -g3 -s LOWQUAL -e"%QUAL<$SNPQ || %MAX(INFO/DP)<$MINCOV || %MAX(INFO/DP)>$MAXCOV" \
+     		 $sample1.gvcf.gz | $bcftools view -f PASS -O z > $sample1.flt.gvcf.gz
 
-	#--> EXERCISES
-	#    Check the meaning of each option (eg, type $bcftools)
-	#    Inspect the vcf file, what is each field?
-	#    Do you find any indel?
-	#    How many variants were filtered out (compare $OUT.flt.gvcf and $OUT.gvcf)? why?
-	#    Count how many heterozygous snps, homozygous snps, why you find only one class?
+   	# Multiple sample caling with samtools is performed adding multiple bam files in bcftools
+   	# either listing all bam files or specifying a bam list file with -b option
+   	# http://www.htslib.org/workflow/#mapping_to_variant
+   	# http://samtools.github.io/bcftools/bcftools.html#mpileup
 
-	cd $DWD
+   	#--> EXERCISE
+   	#    Check the meaning of each option (eg, type $bcftools)
+   	#    Inspect the vcf file, what is each field?
+   	#    Do you find any indel?
+   	#    How many variants were filtered out (compare $sample1.flt.gvcf and $sample1.gvcf)? why?
+   	#    Count how many heterozygous snps, homozygous snps, why you find only one class?
+
+   	cd $DWD
+	
+### Step 3b. 
+# https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
+# single sample calling
+
+   	cd $DIRVCF
+
+   	$gatk --java-options "-Xmx4g" HaplotypeCaller \
+     		-R $DIRASSEMBLY/$ASSEMBLY.fna \
+      		-I $DIRBAM/$sample1/$sample1.rmdup.bam \
+      		-O $sample1.g.vcf.gz \
+      		-ERC GVCF
+
+   	# You need to align reds for sample two
+   	$gatk --java-options "-Xmx4g" HaplotypeCaller \
+      		-R $DIRASSEMBLY/$ASSEMBLY.fna \
+      		-I $DIRBAM/$sample2/$sample2.rmdup.bam \
+      		-O $sample2.g.vcf.gz \
+      		-ERC GVCF
+
+   	# Combine gvcfs
+   	$gatk CombineGVCFs \
+      		-R $DIRASSEMBLY/$ASSEMBLY.fna \
+      		--variant $sample1.g.vcf.gz \
+      		--variant $sample2.g.vcf.gz \
+      		-O cohort.g.vcf.gz
+
+   	# Multisample calling
+   	$gatk --java-options "-Xmx4g" GenotypeGVCFs \
+      		-R $DIRASSEMBLY/$ASSEMBLY.fna \
+      		-V cohort.g.vcf.gz \
+      		-O cohort.vcf.gz
+
+    	cd $DWD
 
 ### Step 4. Visualize some SNPs with IGV (http://software.broadinstitute.org/software/igv/) 
 
