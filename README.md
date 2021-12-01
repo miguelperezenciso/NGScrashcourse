@@ -398,9 +398,8 @@ This is the trickiest step, the one with most options and highly dependent on de
 
    	cd $DWD
 	
-### Step 3b. 
-# https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
-# single sample calling
+### Step 3b. GATK Multiple sample SNP CALLING with gVCF blocks
+Based in https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
 
    	cd $DIRVCF
 
