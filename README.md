@@ -436,6 +436,8 @@ Based in https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
 	# Start IGV (you need java8)
 	# You need to load the Micoplasma genome in $DIRASSEMBLY
 	java -Xmx1000m -jar $igv
+	
+You can also run via web app: https://igv.org/app/
 
 ### Bonus: Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra)
 This is a most useful resource for NGS data. here I show how to automtaically download NGS reads from given samples. You need the SRR id.
