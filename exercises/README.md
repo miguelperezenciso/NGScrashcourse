@@ -1,3 +1,6 @@
+### These are exercises for class 2021
+Please return responses by 10th January 2022
+
 1- Write a python script that returns average P from a fastq file
 
 2- Perform alignment and variant calling for an additional individual in the reads folder
