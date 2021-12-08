@@ -1,5 +1,7 @@
 #!/bin/bash -x
-#
+# What is new 2021-12-08
+#  - Minor changes in GATK
+
 # What is new: 2020-12-01 11:06:26 
 #  - New GATK options for multisample calling
 #  - GATK includes picard
