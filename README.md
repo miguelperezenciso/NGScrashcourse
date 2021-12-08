@@ -459,6 +459,7 @@ Based in https://gatk.broadinstitute.org/hc/en-us/articles/360035890411?id=3893
 You can also run via web app: https://igv.org/app/
 
 ### Bonus: Downloading sequences from SRA archive (https://www.ncbi.nlm.nih.gov/sra)
+**(WARNING: may not work with latest aspera versions, not tested)**
 This is a most useful resource for NGS data. here I show how to automtaically download NGS reads from given samples. You need the SRR id.
 **WARNING: this can take a lot of time and resources !!!!**
 
