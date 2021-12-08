@@ -6,3 +6,5 @@ Please return responses by 10th January 2022
 2- Perform alignment and variant calling for an additional individual in the reads folder
 
 3- Use GATK multisample SNP calling and compare individual SNP calling with joint individual calling. How many SNPs in common, and how many differences.
+
+4- Send a question for the exam you believe is relevant
