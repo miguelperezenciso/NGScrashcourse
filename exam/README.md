@@ -21,3 +21,5 @@ These are questions from previous exams, I would really appreciate you send me p
 - Suppose you have money to sequence 100 individuals at 1x or 1 individual at 100x, which one would you choose? would any of these extremes be useful and what for in case they are useful?
 - Ancient DNA can be sequenced, but do you know which are the main problems we face?
 - What are the benefits of using multiple SNP calling instead of single SNP calling?
+- Why is it needed to use a minimum and maximum read depth to ensure an adequate NGS Data Anaysis?
+
