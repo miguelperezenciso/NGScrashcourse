@@ -3,6 +3,7 @@ These are questions from previous exams, I would really appreciate you send me p
 
 - What is NGS useful for?
 - Why is NGS so popular? What is your opinion in this respect, do you believe we do not need so much sequence data?
+- What do we mean by saying NGS data are 'noisy'? Which problems can we encounter because of that?
 - What advantages does sequencing RNA (RNAseq) offer vs expression arrays?
 - What is the purpose of NGS data alignment? Why don't we use classical tools such as clustal?
 - Are there usually errors in reference genomes? If so, what can be their impact?
